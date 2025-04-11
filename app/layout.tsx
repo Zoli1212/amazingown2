@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 
 export default async function AppLayout({
   params,
+  children
 }: {
   params: Promise<{ locale: string }>
   children: React.ReactNode

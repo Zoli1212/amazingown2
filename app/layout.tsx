@@ -24,12 +24,12 @@ export const metadata: Metadata = {
 
 export default async function AppLayout({
   params,
-  children,
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
   children: React.ReactNode
 }) {
-  const { locale } = params
+  const { locale } = await params;
+
   const messages = await getMessages()
   return (
     <html lang="en">

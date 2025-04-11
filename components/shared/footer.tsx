@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
 
 import { SelectValue } from '@radix-ui/react-select'
 import { useLocale, useTranslations } from 'next-intl'
-import { usePathname, useRouter } from '@/i18n/routing'
+// import { usePathname, useRouter } from '@/i18n/routing'
 import { i18n } from '@/i18n-config'
 import { useState } from 'react'
 

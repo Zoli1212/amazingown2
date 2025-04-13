@@ -4,6 +4,7 @@ import "./globals.css";
 import { APP_NAME } from "@/lib/constants";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,8 +39,8 @@ export default async function AppLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
          <NextIntlClientProvider locale={locale} messages={messages}>
-
-        {children}
+          {children}
+          <Toaster />
          </NextIntlClientProvider>
       </body>
     </html>

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "email": "email dev",
+    "seed": "npx tsx ./lib/db/seed.ts",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -17,6 +19,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.487.0",
+    "mongoose": "^8.13.2",
     "next": "15.3.0",
     "next-intl": "^4.0.2",
     "query-string": "^9.1.1",

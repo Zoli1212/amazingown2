@@ -5,6 +5,7 @@ import Setting from '../db/models/setting.model'
 import { connectToDatabase } from '../db'
 import { formatError } from '../utils'
 import { cookies } from 'next/headers'
+import { withCache } from '../cache'
 
 const globalForSettings = global as unknown as {
   cachedSettings: ISettingInput | null
@@ -16,15 +17,13 @@ export const getNoCachedSetting = async (): Promise<ISettingInput> => {
 }
 
 export const getSetting = async (): Promise<ISettingInput> => {
-  if (!globalForSettings.cachedSettings) {
-    console.log('hit db')
+  return withCache('settings', async () => {
     await connectToDatabase()
     const setting = await Setting.findOne().lean()
-    globalForSettings.cachedSettings = setting
+    return setting
       ? JSON.parse(JSON.stringify(setting))
       : data.settings[0]
-  }
-  return globalForSettings.cachedSettings as ISettingInput
+  })
 }
 
 export const updateSetting = async (newSetting: ISettingInput) => {

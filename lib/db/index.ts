@@ -6,13 +6,34 @@ const cached = (global as any).mongoose || { conn: null, promise: null }
 export const connectToDatabase = async (
   MONGODB_URI = process.env.MONGODB_URI
 ) => {
-  if (cached.conn) return cached.conn
+  try {
+    if (!MONGODB_URI) throw new Error('MONGODB_URI is missing')
 
-  if (!MONGODB_URI) throw new Error('MONGODB_URI is missing')
+    if (cached.conn) {
+      return cached.conn
+    }
 
-  cached.promise = cached.promise || mongoose.connect(MONGODB_URI)
+    if (!cached.promise) {
+      const opts = {
+        bufferCommands: false,
+        maxPoolSize: 10,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      }
 
-  cached.conn = await cached.promise
+      cached.promise = mongoose.connect(MONGODB_URI, opts)
+    }
 
-  return cached.conn
+    try {
+      cached.conn = await cached.promise
+    } catch (e) {
+      cached.promise = null
+      throw e
+    }
+
+    return cached.conn
+  } catch (error) {
+    console.error('MongoDB connection error:', error)
+    throw new Error('Failed to connect to database')
+  }
 }

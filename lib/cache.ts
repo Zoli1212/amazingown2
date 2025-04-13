@@ -4,7 +4,7 @@ type CacheItem<T> = {
 };
 
 const CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
-const cache = new Map<string, CacheItem<any>>();
+const cache = new Map<string, CacheItem<unknown>>();
 
 export function getCache<T>(key: string): T | null {
   const item = cache.get(key);
@@ -16,7 +16,7 @@ export function getCache<T>(key: string): T | null {
     return null;
   }
 
-  return item.data;
+  return item.data as T;
 }
 
 export function setCache<T>(key: string, data: T): void {
@@ -36,8 +36,7 @@ export function clearCache(key?: string): void {
 
 export async function withCache<T>(
   key: string,
-  fn: () => Promise<T>,
-  duration = CACHE_DURATION
+  fn: () => Promise<T>
 ): Promise<T> {
   const cached = getCache<T>(key);
   if (cached) return cached;

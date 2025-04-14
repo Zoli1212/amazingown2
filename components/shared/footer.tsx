@@ -23,7 +23,7 @@ export default function Footer() {
   const { locales } = i18n
   const [ currency, setCurrency ] = useState<string | undefined>(undefined)
 
-  const site = { name: 'Amazingown'}
+  const site = { name: 'FullGreen'}
 
   const locale = useLocale()
   const t = useTranslations()
